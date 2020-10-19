@@ -192,10 +192,12 @@ public class Client implements Runnable {
 			break;
 		case "OPEN":
 			sendRequestToServer(c);
+			sleep(100);
 			handleOpenDataConnection(args);
 			break;
 		case "CLOSE":
 			sendRequestToServer(c);
+			sleep(100);
 			handleCloseDataConnection();
 			break;
 		default:
@@ -537,5 +539,13 @@ public class Client implements Runnable {
 			}
 		});
 		handleGetOutput.start();
+	}
+	
+	private void sleep(long millis) {
+		try {
+			Thread.sleep(millis);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 }

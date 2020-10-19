@@ -36,9 +36,10 @@ public class MainAppClient extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private static String fileSeparator = "/";
 
-	private static final String serverRootPathData = "C:\\Users\\hungv\\FTP-SERVER-DATA";
-	private static final String clientRootPathData = "C:\\Users\\hungv\\CLIENT-DATA";
+	private static final String serverRootPathData = System.getProperty("user.home")+ fileSeparator+ "SERVER-DATA";
+	private static final String clientRootPathData = System.getProperty("user.home")+fileSeparator+ "CLIENT-DATA";
 
 	private PopupMenu popupMenu;
 

@@ -20,8 +20,8 @@ public class PopupMenu extends JPopupMenu implements ActionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static final String serverRootPathData = "C:\\Users\\hungv\\FTP-SERVER-DATA";
-	private static final String clientRootPathData = "C:\\Users\\hungv\\CLIENT-DATA";
+	private static final String serverRootPathData = System.getProperty("user.home")+ "/SERVER-DATA";
+	private static final String clientRootPathData = System.getProperty("user.home")+ "/CLIENT-DATA";
 
 	private final Client client;
 	private String serverPathFile = null;
@@ -241,7 +241,7 @@ public class PopupMenu extends JPopupMenu implements ActionListener {
 
 		int dataPort = rand.nextInt(10000) + 40000;
 		client.exec("OPEN " + dataPort);
-		sleep(200);
+		sleep(500);
 
 		if (path != null) {
 			client.exec("SEND " + clientRootPathData + "/" + path + "/" + fileName);
@@ -271,7 +271,7 @@ public class PopupMenu extends JPopupMenu implements ActionListener {
 		int dataPort = rand.nextInt(10000) + 40000;
 		client.exec("OPEN " + dataPort);
 
-		sleep(200);
+		sleep(500);
 		if (path != null) {
 			client.exec("CD " + path);
 		}

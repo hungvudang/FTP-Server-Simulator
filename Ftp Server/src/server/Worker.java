@@ -72,7 +72,7 @@ public class Worker extends Thread {
 	public Worker(Socket client) {
 		super();
 		this.clientSocket = client;
-		this.root = System.getProperty("user.home") + fileSeparator + "FTP-SERVER-DATA";
+		this.root = System.getProperty("user.home") + fileSeparator + "SERVER-DATA";
 		this.currDirectory = this.root;
 
 	}
