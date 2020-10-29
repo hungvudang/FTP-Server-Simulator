@@ -20,8 +20,8 @@ public class PopupMenu extends JPopupMenu implements ActionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static final String serverRootPathData = System.getProperty("user.home")+ "/SERVER-DATA";
-	private static final String clientRootPathData = System.getProperty("user.home")+ "/CLIENT-DATA";
+	private static final String serverRootPathData = System.getProperty("user.home") + "/SERVER-DATA";
+	private static final String clientRootPathData = System.getProperty("user.home") + "/CLIENT-DATA";
 
 	private final Client client;
 	private String serverPathFile = null;
@@ -115,6 +115,11 @@ public class PopupMenu extends JPopupMenu implements ActionListener {
 
 			System.out.println("popup rename");
 			handleRenameMenu();
+			
+			if (clientTree != null && isClientTreeSelected)
+				repaintTreeView(clientTree, "CLIENT DATA", clientRootPathData);
+			if (serverTree != null && !isClientTreeSelected)
+				repaintTreeView(serverTree, "SERVER DATA", serverRootPathData);
 		}
 		// handle mDelete menuItem
 		else if (e.getSource() == this.mDelete) {
@@ -281,7 +286,39 @@ public class PopupMenu extends JPopupMenu implements ActionListener {
 	}
 
 	private void handleRenameMenu() {
+		// for client side
+		if (isClientTreeSelected) {
+			System.out.println(clientPathFile);
+			int firstIndexOfSperator = clientPathFile.indexOf("/");
+			int lastIndexOfSperator = clientPathFile.lastIndexOf("/");
+			String path = null;
+			if (firstIndexOfSperator != lastIndexOfSperator) {
+				path = clientPathFile.substring(firstIndexOfSperator + 1, lastIndexOfSperator);
+			}
 
+			String fileName = clientPathFile.substring(lastIndexOfSperator + 1);
+			if (fileName.equals("CLIENT DATA")) {
+				JOptionPane.showMessageDialog(null, "Access denied", "Erorr", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+
+			if (path == null) {
+				path = clientRootPathData;
+			} else {
+				path = clientRootPathData + "/" + path;
+			}
+
+			String newFileName = JOptionPane.showInputDialog("New File Name");
+			System.out.println(newFileName);
+			if (newFileName != null && !newFileName.isEmpty()) {
+				
+				File fOldName = new File(path + "/" + fileName);
+				File fNewName = new File(path + "/" + newFileName);
+				fOldName.renameTo(fNewName);
+			}
+		} else {
+			// server side
+		}
 	}
 
 	private void handleDeleteMenu() {
