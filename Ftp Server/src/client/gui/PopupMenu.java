@@ -115,7 +115,7 @@ public class PopupMenu extends JPopupMenu implements ActionListener {
 
 			System.out.println("popup rename");
 			handleRenameMenu();
-			
+
 			if (clientTree != null && isClientTreeSelected)
 				repaintTreeView(clientTree, "CLIENT DATA", clientRootPathData);
 			if (serverTree != null && !isClientTreeSelected)
@@ -161,6 +161,7 @@ public class PopupMenu extends JPopupMenu implements ActionListener {
 	}
 
 	private void handleNewMenu() {
+		
 		// request from client
 		if (isClientTreeSelected) {
 			String path = null;
@@ -228,7 +229,6 @@ public class PopupMenu extends JPopupMenu implements ActionListener {
 	private void handleSendMenu() {
 
 		Random rand = new Random();
-//		System.out.println(clientPathFile);
 		int firstIndexOfSperator = clientPathFile.indexOf("/");
 		int lastIndexOfSperator = clientPathFile.lastIndexOf("/");
 
@@ -259,7 +259,6 @@ public class PopupMenu extends JPopupMenu implements ActionListener {
 	private void handleRetvMenu() {
 
 		Random rand = new Random();
-//		System.out.println(serverPathFile);
 		int firstIndexOfSperator = serverPathFile.indexOf("/");
 		int lastIndexOfSperator = serverPathFile.lastIndexOf("/");
 		String path = null;
@@ -286,6 +285,7 @@ public class PopupMenu extends JPopupMenu implements ActionListener {
 	}
 
 	private void handleRenameMenu() {
+		
 		// for client side
 		if (isClientTreeSelected) {
 			System.out.println(clientPathFile);
@@ -311,7 +311,7 @@ public class PopupMenu extends JPopupMenu implements ActionListener {
 			String newFileName = JOptionPane.showInputDialog("New File Name");
 			System.out.println(newFileName);
 			if (newFileName != null && !newFileName.isEmpty()) {
-				
+
 				File fOldName = new File(path + "/" + fileName);
 				File fNewName = new File(path + "/" + newFileName);
 				fOldName.renameTo(fNewName);
@@ -324,6 +324,7 @@ public class PopupMenu extends JPopupMenu implements ActionListener {
 	private void handleDeleteMenu() {
 
 		// Request delete file from client
+		
 		if (isClientTreeSelected) {
 			System.out.println(clientPathFile);
 			int firstIndexOfSperator = clientPathFile.indexOf("/");
@@ -350,7 +351,7 @@ public class PopupMenu extends JPopupMenu implements ActionListener {
 
 		// Request delete file from server
 		else {
-			System.out.println(serverPathFile);
+			
 			int firstIndexOfSperator = serverPathFile.indexOf("/");
 			int lastIndexOfSperator = serverPathFile.lastIndexOf("/");
 			String path = null;
