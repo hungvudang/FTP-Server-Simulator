@@ -31,11 +31,18 @@ import javax.swing.tree.DefaultTreeModel;
 
 import client.Client;
 
+import javax.swing.JProgressBar;
+
 public class MainAppClient extends JFrame {
+
 	/**
 	 * 
 	 */
+	
 	private static final long serialVersionUID = 1L;
+	
+	private JPanel contentPane;
+	
 	private static String fileSeparator = "/";
 
 	private static final String serverRootPathData = System.getProperty("user.home")+ fileSeparator+ "SERVER-DATA";
@@ -46,9 +53,15 @@ public class MainAppClient extends JFrame {
 	private Client client = null;
 	private boolean isBinaryTransferType = true;
 
-	private JPanel contentPane;
+//	private JPanel contentPane;
+	
 	private JTextField hostTextField;
 	private JTextField portTextField;
+	
+	private JProgressBar progressBar;
+	
+	
+
 
 	/**
 	 * Launch the application.
@@ -82,8 +95,8 @@ public class MainAppClient extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-
 	public MainAppClient() {
+		
 		setResizable(false);
 
 		setTitle("FTP Client");
@@ -96,7 +109,7 @@ public class MainAppClient extends JFrame {
 		contentPane.setLayout(null);
 
 		JScrollPane scrollPaneServer = new JScrollPane();
-		scrollPaneServer.setBounds(10, 261, 364, 409);
+		scrollPaneServer.setBounds(10, 261, 364, 390);
 		contentPane.add(scrollPaneServer);
 
 		JTree serverTree = new JTree();
@@ -137,7 +150,7 @@ public class MainAppClient extends JFrame {
 		scrollPaneServer.setViewportView(serverTree);
 
 		JScrollPane scrollPaneClient = new JScrollPane();
-		scrollPaneClient.setBounds(384, 261, 364, 409);
+		scrollPaneClient.setBounds(384, 261, 364, 390);
 		contentPane.add(scrollPaneClient);
 
 		clientTree.addMouseListener(new MouseAdapter() {
@@ -194,7 +207,8 @@ public class MainAppClient extends JFrame {
 				String serverHost = hostTextField.getText();
 				int serverPort = Integer.parseInt(portTextField.getText());
 				client = new Client(serverHost, serverPort, outputTextArea);
-
+				client.setMainAppClient(MainAppClient.this);
+				
 				Thread handleClientThread = new Thread(client);
 				handleClientThread.start();
 				repaintTreeView(serverTree, "SERVER DATA", serverRootPathData);
@@ -310,6 +324,14 @@ public class MainAppClient extends JFrame {
 		});
 		btnClearOuputConsole.setBounds(684, 109, 58, 28);
 		controllPanel.add(btnClearOuputConsole);
+		
+		this.progressBar = new JProgressBar();
+		this.progressBar.setBounds(59, 659, 315, 19);
+		contentPane.add(this.progressBar);
+		
+		JLabel lblProccess = new JLabel("Process:");
+		lblProccess.setBounds(10, 659, 55, 16);
+		contentPane.add(lblProccess);
 
 	}
 
@@ -365,5 +387,10 @@ public class MainAppClient extends JFrame {
 
 	private void clearOutputConsoleRespondsFromServer(JTextArea outputTextArea) {
 		outputTextArea.setText("");
+	}
+	
+	
+	public void setProccessBar(int newValue) {
+		this.progressBar.setValue(newValue);
 	}
 }

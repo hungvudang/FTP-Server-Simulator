@@ -15,6 +15,8 @@ import java.util.Scanner;
 
 import javax.swing.JTextArea;
 
+import client.gui.MainAppClient;
+
 /**
  * @author hungv
  *
@@ -55,6 +57,8 @@ public class Client implements Runnable {
 	private boolean clientRunning = true;
 
 	Scanner in = null;
+	
+	private MainAppClient clientGUI = null;
 
 	public static void main(String[] args) {
 		Client client = new Client();
@@ -384,12 +388,23 @@ public class Client implements Runnable {
 					}
 
 					// write file with buffer
-					byte[] buf = new byte[1048576];
+					int sizeBuf = 1048576;
+					sizeBuf = 1024;
+					byte[] buf = new byte[sizeBuf];
 					int l = 0;
-
+					
+					// =================================
+					this.clientGUI.setProccessBar(0);
+					long count = 0;
+					
 					try {
-						while ((l = bis.read(buf, 0, 1048576)) != -1 && (bis.available()) != -1) {
+						while ((l = bis.read(buf, 0, sizeBuf)) != -1 && (bis.available()) != -1) {
 							bos.write(buf, 0, l);
+							count += l;
+							
+							
+							System.out.println(((float)count / (float)f.length() )*100 + "%");
+							this.clientGUI.setProccessBar((int)(((float)count / (float)f.length() )*100));
 						}
 
 					} catch (IOException e) {
@@ -540,7 +555,7 @@ public class Client implements Runnable {
 		});
 		handleGetOutput.start();
 	}
-	
+
 	private void sleep(long millis) {
 		try {
 			Thread.sleep(millis);
@@ -548,4 +563,13 @@ public class Client implements Runnable {
 			e.printStackTrace();
 		}
 	}
+	
+	public void setMainAppClient(MainAppClient taget) {
+		this.clientGUI = taget;
+	}
+	
+	public MainAppClient getMainAppClient() {
+		return this.clientGUI;
+	}
+
 }
