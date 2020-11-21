@@ -12,6 +12,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JTextArea;
 
@@ -394,7 +395,7 @@ public class Client implements Runnable {
 					int l = 0;
 					
 					// =================================
-					this.clientGUI.setProccessBar(0);
+					this.clientGUI.setProgressBar(0);
 					long count = 0;
 					
 					try {
@@ -404,8 +405,21 @@ public class Client implements Runnable {
 							
 							
 							System.out.println(((float)count / (float)f.length() )*100 + "%");
-							this.clientGUI.setProccessBar((int)(((float)count / (float)f.length() )*100));
+							this.clientGUI.setProgressBar((int)(((float)count / (float)f.length() )*100));
 						}
+						
+						Thread handleResetProgressBar = new Thread(()->{
+							try {
+								TimeUnit.SECONDS.sleep(5);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+							clientGUI.setProgressBar(0);
+						});
+						
+						handleResetProgressBar.start();
+								
+						
 
 					} catch (IOException e) {
 						System.out.println(TAG + "\nDetails: " + e.getMessage());
@@ -571,5 +585,5 @@ public class Client implements Runnable {
 	public MainAppClient getMainAppClient() {
 		return this.clientGUI;
 	}
-
+	
 }

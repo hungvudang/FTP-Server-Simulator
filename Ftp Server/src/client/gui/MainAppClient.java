@@ -390,7 +390,7 @@ public class MainAppClient extends JFrame {
 	}
 	
 	
-	public void setProccessBar(int newValue) {
+	public void setProgressBar(int newValue) {
 		this.progressBar.setValue(newValue);
 	}
 }
